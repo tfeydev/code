@@ -1,5 +1,5 @@
 # === Exclude local repositories folder ===
-repositories
+/repositories
 
 # === Build artifacts ===
 **/target/
