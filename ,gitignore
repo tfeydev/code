@@ -1,0 +1,28 @@
+# === Exclude local repositories folder ===
+repositories/
+
+# === Build artifacts ===
+**/target/
+**/classes/
+**/generated-sources/
+**/maven-status/
+
+# === IDE settings ===
+.idea/
+.vscode/
+*.iml
+
+# === OS / misc ===
+.DS_Store
+Thumbs.db
+
+# === Logs and temp ===
+*.log
+*.tmp
+
+# === Node / npm (if used) ===
+node_modules/
+
+# === Python cache (if used) ===
+__pycache__/
+*.pyc
