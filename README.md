@@ -1,64 +1,31 @@
-# SOP: Deploying a RHEL Image to OCI with SSH/SFTP Access
+# Code Repository: Learning Linux, OCI, and Java Integration
 
-1. **Prepare prerequisites**
+This repository organizes my learning progress with RHEL 10 Linux (dual-boot setup), Oracle Cloud Infrastructure (OCI) Always Free tier, Bash scripting, and Java integration. It focuses on deploying RHEL images to OCI and testing related tools like Podman for future containerization.
 
-   - Access to Red Hat Insights (Image Builder) and Oracle Cloud Infrastructure (OCI) tenancy
-   - A VCN/subnet with inbound TCP/22 allowed
-   - SSH client available on the local system
+## What I've Done
 
-2. **Build image in Red Hat Insights**
+- Configured a dual-boot system with RHEL 10 for local development and testing.
+- Used OCI Always Free tier to deploy custom RHEL images, including SSH/SFTP access setup.
+- Documented the OCI deployment process in a detailed SOP (see [oracle/docs/oci-deployment-sop.md](oracle/docs/oci-deployment-sop.md)).
+- Created a Java project to test OCI SDK connections (linked below).
+- Structured folders for future work with Podman and Bash scripts.
 
-   - Navigate to `console.redhat.com/insights/image-builder`
-   - Configure RHEL release, packages, and settings
-   - Generate/upload SSH key pair (public key embedded for default cloud user)
-   - Build image; note format (e.g., `.qcow2`)
+## Folder Structure
 
-3. **Import image into OCI**
+- **containers**: Placeholder for Podman experiments (planned for future containerized Java or Wildfly apps).
+- **linux**: Notes on RHEL 10 dual-boot setup and Bash scripting experiments.
+- **oracle**: OCI-specific content, including deployment guides in `docs/`.
+- **scripts**: Bash scripts for automation, such as OCI resource checks.
 
-   - Transfer via direct URL import or download/upload to OCI Object Storage
-   - In OCI: _Compute → Custom Images → Import image_
-   - Set source to Object Storage, format to QCOW2, import and wait for “Available” status
+## Getting Started
 
-4. **Launch VM from custom image**
+1. Clone the repo: `git clone https://github.com/tfeydev/code.git`
+2. Explore folders: For OCI deployment, see `oracle/docs/oci-deployment-sop.md`.
 
-   - _Compute → Instances → Create instance_
-   - Select imported image, desired shape, target subnet
-   - Add SSH public key for an existing VM user (e.g., `cloud-user`)
-   - Ensure a public IP is assigned; launch instance
+To verify setup:
+- Check folder structure: `ls -R` (should show `containers`, `linux`, `oracle`, `scripts`).
+- Verify RHEL environment: Run `cat /etc/redhat-release` (should show RHEL 10 if on your dual-boot system).
 
-5. **Configure SSH for intended user**
-   - Determine actual login user in VM (`cloud-user` or custom)
-   - Locally derive public key:
+## Related Projects
 
-```bash
-   ssh-keygen -y -f /path/to/private_key
-```
-
-- In VM (via Console Connection if needed):
-
-```bash
-   mkdir -p ~/.ssh
-   chmod 700 ~/.ssh
-   echo "PUBLIC_KEY" >> ~/.ssh/authorized_keys
-   chmod 600 ~/.ssh/authorized_keys
-```
-
-6. **Verify SSH access**
-
-```bash
-    ssh -i /path/to/private_key <username>@<public_IP>
-```
-
-7. **Configure SFTP in FileZilla**
-
-   - Protocol: SFTP
-   - Host: <public_IP>
-   - Port: 22
-   - User: <username>
-   - Key file: /path/to/private_key
-
-8. **Optimize storage**
-
-   If no further instances are needed from the custom image, delete it from OCI to avoid storage fees
-
-   Optionally export the image to Object Storage and download locally before deletion
+- [ConnectionTestOciJavaSdk](https://github.com/tfeydev/ConnectionTestOciJavaSdk): A Maven-based Java project testing OCI SDK connections, complementing the OCI deployment work here.
