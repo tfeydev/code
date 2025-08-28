@@ -1,5 +1,5 @@
 # === Exclude local repositories folder ===
-/repositories
+/home/thor/code/repositories
 
 # === Build artifacts ===
 **/target/
