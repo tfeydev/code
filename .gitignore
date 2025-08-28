@@ -1,6 +1,3 @@
-# === Exclude local repositories folder ===
-repositories
-
 # === Build artifacts ===
 **/target/
 **/classes/
